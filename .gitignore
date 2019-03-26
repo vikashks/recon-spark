@@ -1,0 +1,13 @@
+.idea/
+*/target/
+target/*
+.DS_Store
+apis/.DS_Store
+app/.DS_Store
+runner/.DS_Store
+lib_managed/
+upload/.DS_Store
+project/project/*
+app/src/target/*
+app/apis/target/*
+app/app/*
