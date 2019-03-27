@@ -1,6 +1,9 @@
 package com.practice.recon.job.recon
 
+import org.apache.spark.sql.catalyst.plans.{Inner, JoinType}
 import org.apache.spark.sql.{Column, DataFrame}
+
+import org.apache.spark.sql.functions.col
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
@@ -14,6 +17,8 @@ class ReconDagBuilder {
   private var whereCriteria: List[Column] = Nil
 
   private var joinCriteria: List[Column] = Nil
+
+  private var groupByCriteria: List[Column] = Nil
 
   private var joinColumn: Column = _
 
@@ -40,9 +45,20 @@ class ReconDagBuilder {
     this
   }
 
+  def groupCriteria(col: Column): ReconDagBuilder = {
+    groupByCriteria = col :: groupByCriteria
+    this
+  }
+
   def build(): DataFrame = {
-    dataFrame = left.join(right, temp(joinCriteria, null))
-    whereCriteria.foreach((column: Column) => dataFrame.where(column))
+    dataFrame = left.join(right, temp(joinCriteria, null), Inner.sql)
+    groupByCriteria match {
+      case Nil =>
+        whereCriteria.foreach((column: Column) => dataFrame = dataFrame.where(column))
+      case _ =>
+        dataFrame = dataFrame.groupBy(groupByCriteria: _*).agg(whereCriteria.head, whereCriteria.tail: _*)
+    }
+
     dataFrame
   }
 

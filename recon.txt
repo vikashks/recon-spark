@@ -1,1 +1,13 @@
-match passbook with bankaccount on amt=amount and txndate=date where accno=acountno and abc=xyz
+    match
+        passbook csv(file:///Users/vks/Workspace/goeuro/spark-jobs/passbook.csv)
+            with
+        bankaccount csv(file:///Users/vks/Workspace/goeuro/spark-jobs/bankaccount.csv)
+        where accno=acountno and abc=xyz
+        on amt=amount and txndate=date
+
+    match
+        passbook csv(file:///Users/vks/Workspace/goeuro/spark-jobs/passbook.csv)
+            with
+        bankaccount csv(file:///Users/vks/Workspace/goeuro/spark-jobs/bankaccount.csv)
+        where accno=acountno
+        on sum(amt)=sum(amount) group by abc

@@ -22,21 +22,39 @@ public interface ReconciliationVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSource(ReconciliationParser.SourceContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link ReconciliationParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpr(ReconciliationParser.ExprContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link ReconciliationParser#join}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitJoin(ReconciliationParser.JoinContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ReconciliationParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpr(ReconciliationParser.ExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ReconciliationParser#group}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGroup(ReconciliationParser.GroupContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ReconciliationParser#operator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperator(ReconciliationParser.OperatorContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ReconciliationParser#operation}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitOperation(ReconciliationParser.OperationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link ReconciliationParser#format}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFormat(ReconciliationParser.FormatContext ctx);
 }
